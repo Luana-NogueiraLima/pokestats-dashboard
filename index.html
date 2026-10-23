@@ -1,1 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Dashboard Pokémon</title>
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
 
+  <header class="topo">
+    <h1>Dashboard Pokémon</h1>
+    <nav class="menu">
+      <a href="#dashboard">Dashboard</a>
+      <a href="#analises">Análises</a>
+      <a href="#meu-time">Meu Time</a>
+    </nav>
+  </header>
+  <main>
+
+    <section id="kpis" class="grid-kpis">
+      <article class="card">
+        <h2>Total de Pokémon</h2>
+        <p id="kpi-total">--</p>
+      </article>
+      <article class="card">
+        <h2>Maior soma de atributos</h2>
+        <p id="kpi-maior-soma">--</p>
+      </article>
+      <article class="card">
+        <h2>Tipo mais comum</h2>
+        <p id="kpi-tipo">--</p>
+      </article>
+      <article class="card">
+        <h2>Média de HP</h2>
+        <p id="kpi-hp">--</p>
+      </article>
+    </section>
+
+    <section id="filtros" class="card">
+      <label for="filtro-geracao">Geração</label>
+      <select id="filtro-geracao">
+        <option value="todas">Todas</option>
+      </select>
+
+      <label for="filtro-tipo">Tipo</label>
+      <select id="filtro-tipo">
+        <option value="todos">Todos</option>
+      </select>
+
+      <label for="busca">Buscar Pokémon</label>
+      <input type="search" id="busca" placeholder="Digite o nome">
+    </section>
+
+    <section id="dashboard" class="grid-graficos">
+      <article class="card">
+        <h2>Evolução por geração</h2>
+        <canvas id="grafico-geracoes"></canvas>
+      </article>
+      <article class="card">
+        <h2>Pokémon mais usados (Smogon)</h2>
+        <canvas id="grafico-mais-usados"></canvas>
+      </article>
+      <article class="card">
+        <h2>Meu Time vs. média geral</h2>
+        <canvas id="grafico-time"></canvas>
+      </article>
+    </section>
+
+    <section id="analises" class="card">
+      <h2>Análises Pokémon</h2>
+      <div id="detalhes-pokemon">
+        <p>Selecione um Pokémon para ver os detalhes.</p>
+      </div>
+    </section>
+
+    <section id="meu-time" class="card">
+      <h2>Meu Time</h2>
+    </section>
+  </main>
+  <footer class="rodape">
+    <p>Fontes dos dados: Smogon, Kaggle e PokéAPI</p>
+  </footer>
+
+</body>
+</html>
