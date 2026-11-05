@@ -1,1 +1,118 @@
+# Fontes e Metodologia — PokéStats
 
+## 1. Apresentação
+
+O PokéStats utiliza dados de fontes públicas para apresentar informações estatísticas sobre Pokémon e sua utilização no cenário competitivo.
+
+A metodologia combina dados de utilização disponibilizados pelo Smogon com informações complementares obtidas por meio da PokéAPI.
+
+É importante destacar que os dados de utilização competitiva não representam a popularidade geral dos Pokémon entre os fãs. Eles indicam a frequência de utilização no ambiente competitivo analisado.
+
+## 2. Fontes de dados
+
+### 2.1. Smogon
+
+**Endereço:** https://www.smogon.com/stats/
+
+O Smogon é uma plataforma voltada ao cenário competitivo de Pokémon e disponibiliza estatísticas de utilização dos Pokémon em diferentes formatos e gerações.
+
+Para o desenvolvimento do PokéStats, foram utilizados arquivos estatísticos referentes aos meses de janeiro, fevereiro e março de 2026.
+
+**Critérios utilizados:**
+
+- Período analisado: janeiro a março de 2026.
+- Formato competitivo: OU (OverUsed).
+- Gerações contempladas: da primeira à nona geração.
+- Informação principal: utilização dos Pokémon no cenário competitivo.
+
+Os arquivos estatísticos foram utilizados como base para identificar os Pokémon com maior utilização e comparar os dados entre as gerações.
+
+### 2.2. PokéAPI
+
+**Endereço:** https://pokeapi.co/
+
+A PokéAPI é uma API pública que disponibiliza informações sobre o universo Pokémon.
+
+No projeto, ela é utilizada para complementar os dados estatísticos do Smogon, permitindo apresentar:
+
+- Nome dos Pokémon.
+- Imagens.
+- Tipos.
+- Geração.
+- Atributos básicos (HP, Attack, Defense, Special Attack, Special Defense e Speed).
+
+Essas informações são utilizadas principalmente na consulta individual de Pokémon e na comparação de equipes.
+
+## 3. Período e critérios de análise
+
+A análise considera os dados disponibilizados pelo Smogon entre janeiro e março de 2026.
+
+Foram considerados os registros referentes ao formato OU de cada geração contemplada no projeto.
+
+O formato OU foi escolhido por representar um dos ambientes competitivos utilizados nas estatísticas do Smogon.
+
+Os dados foram organizados em um arquivo JSON (`pokestats_usage.json`), permitindo sua leitura e manipulação por meio de JavaScript.
+
+## 4. Tratamento e organização dos dados
+
+Os arquivos originais do Smogon foram reunidos e organizados para utilização no dashboard.
+
+Durante esse processo:
+
+1. Foram selecionados os arquivos correspondentes ao período definido.
+2. Foram considerados os registros do formato OU.
+3. Os dados foram organizados por geração e Pokémon.
+4. As informações foram consolidadas em um arquivo JSON.
+5. Os dados passaram a ser utilizados na construção dos indicadores e gráficos.
+
+O arquivo `pokestats_usage.json` contém os dados organizados utilizados pelo sistema.
+
+## 5. Métricas e visualizações
+
+O dashboard apresenta diferentes formas de explorar os dados:
+
+### Pokémon mais utilizados
+
+Apresenta um ranking dos Pokémon com maior utilização nos dados analisados.
+
+### Utilização por geração
+
+Permite comparar os dados de utilização entre as gerações contempladas no projeto.
+
+### Distribuição por tipo
+
+Apresenta a quantidade de Pokémon classificados em cada tipo.
+
+Quando um Pokémon possui dois tipos, ele é contabilizado em ambas as categorias. Por isso, a soma das quantidades por tipo pode ser superior ao número de Pokémon distintos.
+
+### Indicadores gerais
+
+Apresentam informações resumidas calculadas a partir dos dados disponíveis, como maior soma de atributos, tipo mais comum e média de HP.
+
+### Comparação de equipes
+
+Utiliza os atributos básicos fornecidos pela PokéAPI para calcular e comparar a média dos atributos dos Pokémon selecionados para uma equipe.
+
+## 6. Tecnologias utilizadas no tratamento e apresentação
+
+- **JavaScript:** leitura, organização e manipulação dos dados.
+- **JSON:** armazenamento dos dados estatísticos organizados.
+- **Chart.js:** representação visual das métricas por meio de gráficos.
+- **PokéAPI:** obtenção de informações complementares dos Pokémon.
+- **Back4App:** armazenamento dos registros cadastrados na área Minhas análises Pokémon.
+
+## 7. Limitações da análise
+
+É importante considerar algumas limitações:
+
+- Os dados representam utilização no cenário competitivo, não a popularidade geral dos Pokémon.
+- Os resultados estão limitados ao período de janeiro a março de 2026.
+- A análise considera o formato OU e os registros selecionados para o projeto.
+- As informações estatísticas do Smogon e os atributos da PokéAPI possuem finalidades diferentes e não devem ser interpretados como uma única métrica.
+- Os dados podem variar conforme o período, o formato competitivo e a geração analisada.
+
+## 8. Referências
+
+SMOGON. **Usage Statistics**. Disponível em: https://www.smogon.com/stats/. 
+
+POKÉAPI. **PokéAPI — RESTful Pokémon API**. Disponível em: https://pokeapi.co/.

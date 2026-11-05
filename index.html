@@ -1,88 +1,191 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <title>Dashboard Pokémon</title>
-  <link rel="stylesheet" href="css/style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PokéStats - Dashboard Pokémon</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-  <header class="topo">
-    <h1>Dashboard Pokémon</h1>
-    <nav class="menu">
-      <a href="#dashboard">Dashboard</a>
-      <a href="#analises">Análises</a>
-      <a href="#meu-time">Meu Time</a>
-    </nav>
-  </header>
-  <main>
+    <header class="topo">
+        <h1>PokéStats</h1>
 
-    <section id="kpis" class="grid-kpis">
-      <article class="card">
-        <h2>Total de Pokémon</h2>
-        <p id="kpi-total">--</p>
-      </article>
-      <article class="card">
-        <h2>Maior soma de atributos</h2>
-        <p id="kpi-maior-soma">--</p>
-      </article>
-      <article class="card">
-        <h2>Tipo mais comum</h2>
-        <p id="kpi-tipo">--</p>
-      </article>
-      <article class="card">
-        <h2>Média de HP</h2>
-        <p id="kpi-hp">--</p>
-      </article>
-    </section>
+        <nav class="menu">
+            <a href="#kpis">Visão geral</a>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#analises">Analisar Pokémon</a>
+            <a href="#meu-time">Meu Time</a>
+            <a href="#minhas-analises">Minhas análises</a>
+        </nav>
+    </header>
 
-    <section id="filtros" class="card">
-      <label for="filtro-geracao">Geração</label>
-      <select id="filtro-geracao">
-        <option value="todas">Todas</option>
-      </select>
+    <main>
 
-      <label for="filtro-tipo">Tipo</label>
-      <select id="filtro-tipo">
-        <option value="todos">Todos</option>
-      </select>
+        <section id="kpis" class="grid-kpis">
 
-      <label for="busca">Buscar Pokémon</label>
-      <input type="search" id="busca" placeholder="Digite o nome">
-    </section>
+            <article class="card">
+                <h2>Pokémon analisados</h2>
+                <p id="kpi-total">0</p>
+            </article>
 
-    <section id="dashboard" class="grid-graficos">
-      <article class="card">
-        <h2>Evolução por geração</h2>
-        <canvas id="grafico-geracoes"></canvas>
-      </article>
-      <article class="card">
-        <h2>Pokémon mais usados (Smogon)</h2>
-        <canvas id="grafico-mais-usados"></canvas>
-      </article>
-      <article class="card">
-        <h2>Meu Time vs. média geral</h2>
-        <canvas id="grafico-time"></canvas>
-      </article>
-    </section>
+            <article class="card">
+                <h2>Maior soma de atributos</h2>
+                <p id="kpi-maior-soma">-</p>
+            </article>
 
-    <section id="analises" class="card">
-      <h2>Análises Pokémon</h2>
-      <div id="detalhes-pokemon">
-        <p>Selecione um Pokémon para ver os detalhes.</p>
-      </div>
-    </section>
+            <article class="card">
+                <h2>Tipo mais comum</h2>
+                <p id="kpi-tipo">-</p>
+            </article>
 
-    <section id="meu-time" class="card">
-      <h2>Meu Time</h2>
-    </section>
-  </main>
-  <footer class="rodape">
-    <p>Fontes dos dados: Smogon, Kaggle e PokéAPI</p>
-  </footer>
+            <article class="card">
+                <h2>Média de HP</h2>
+                <p id="kpi-hp">0</p>
+            </article>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="js/script.js"></script>
+        </section>
+
+        <section id="dashboard">
+
+            <h2>Dashboard</h2>
+
+            <div class="grid-graficos">
+
+                <article class="card">
+                    <h2>Pokémon mais utilizados</h2>
+                    <canvas id="grafico-mais-usados"></canvas>
+                </article>
+
+                <article class="card">
+                    <h2>Utilização por geração</h2>
+                    <canvas id="grafico-geracoes"></canvas>
+                </article>
+
+                <article class="card">
+                    <h2>Distribuição de Pokémon por tipo</h2>
+                    <canvas id="grafico-tipos"></canvas>
+                </article>
+
+            </div>
+
+        </section>
+
+        <section id="analises" class="card">
+
+            <h2>Analisar Pokémon</h2>
+
+            <p>
+                Consulte um Pokémon para visualizar sua imagem,
+                seus tipos e seus atributos.
+            </p>
+
+            <input
+                type="search"
+                id="buscar-analise"
+                placeholder="Digite o nome de um Pokémon"
+                list="lista-pokedex"
+                autocomplete="off"
+            >
+
+            <datalist id="lista-pokedex"></datalist>
+
+            <button id="consultar-pokemon">
+                Consultar Pokémon
+            </button>
+
+            <div id="detalhes-pokemon">
+                <p>Digite o nome de um Pokémon para consultar seus dados.</p>
+            </div>
+
+        </section>
+
+        <section id="meu-time" class="card">
+
+            <h2>Meu Time</h2>
+
+            <p>
+                Escolha até seis Pokémon para montar seu time e comparar
+                seus atributos com a média geral dos Pokémon analisados.
+            </p>
+
+            <input
+                type="search"
+                id="selecionar-pokemon"
+                list="lista-pokedex"
+                placeholder="Digite o nome de um Pokémon"
+                autocomplete="off"
+            >
+
+            <button id="adicionar-pokemon">
+                Adicionar ao time
+            </button>
+
+            <div id="lista-time">
+                <p>Seu time ainda está vazio.</p>
+            </div>
+
+            <article class="card comparacao-card">
+
+                <h3>Meu Time vs. Média Geral</h3>
+
+                <p>
+                    Compare os atributos médios do seu time
+                    com os Pokémon analisados.
+                </p>
+
+                <div class="container-radar">
+                    <canvas id="grafico-comparacao"></canvas>
+                </div>
+
+            </article>
+
+        </section>
+
+        <section id="minhas-analises" class="card">
+
+    <h2>Minhas análises Pokémon</h2>
+
+    <p>Cadastre e organize suas análises de Pokémon.</p>
+
+    <form id="form-analise">
+
+        <label for="nome-pokemon">Nome do Pokémon</label>
+        <input type="text" id="nome-pokemon" required>
+
+        <label for="categoria-analise">Categoria ou estratégia</label>
+        <input type="text" id="categoria-analise" required>
+
+        <label for="descricao-analise">Descrição da análise</label>
+        <textarea id="descricao-analise" required></textarea>
+
+        <label for="data-analise">Data da análise</label>
+        <input type="date" id="data-analise" required>
+
+        <button type="submit">Salvar análise</button>
+
+    </form>
+
+    <div id="lista-analises">
+        <p>Nenhuma análise cadastrada.</p>
+    </div>
+
+</section>
+
+    </main>
+
+    <footer class="rodape">
+        <p>PokéStats - Dashboard Pokémon</p>
+    </footer>
+
+   <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+   <script src="js/back4app.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script src="js/script.js"></script>
 
 </body>
+
 </html>
