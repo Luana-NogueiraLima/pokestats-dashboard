@@ -27,16 +27,12 @@ let pokemonValidos = [];
 let meuTime = [];
 let pokedexCompleta = [];
 
-// ==========================================
-// IDENTIDADE VISUAL DOS GRÁFICOS
-// ==========================================
-
 const coresGrafico = {
-    azul: "#E53935",          // vermelho principal
+    azul: "#E53935",          
     azulClaro: "#FF8A80",
-    azulEscuro: "#1B2229",    // fundo do tooltip
-    roxo: "#9B1C1C",          // vermelho escuro
-    magenta: "#C62828",       // vermelho médio
+    azulEscuro: "#1B2229",    
+    roxo: "#9B1C1C",          
+    magenta: "#C62828",       
     amarelo: "#FFCB05",
     laranja: "#FF9F1A",
     vermelho: "#E53935",
@@ -47,7 +43,6 @@ const coresGrafico = {
     fundo: "#26323A"
 };
 
-// Degradê vertical (barras em pé): magenta/roxo embaixo -> ciano em cima
 function gradienteVertical(chart) {
     try {
         const area = chart.chartArea;
@@ -66,7 +61,6 @@ function gradienteVertical(chart) {
     }
 }
 
-// Degradê horizontal (barras deitadas): magenta -> roxo -> ciano
 function gradienteHorizontal(context) {
     try {
         const { chart, element } = context;
@@ -132,10 +126,6 @@ const configuracaoTooltip = {
     }
 };
 
-// ==========================================
-// TRADUÇÃO DOS TIPOS
-// ==========================================
-
 function traduzirTipo(tipo) {
     const traducoes = {
         normal: "Normal",
@@ -160,10 +150,6 @@ function traduzirTipo(tipo) {
 
     return traducoes[tipo.toLowerCase()] || tipo;
 }
-
-// ==========================================
-// CONFIGURAÇÃO DOS EIXOS
-// ==========================================
 
 function configuracaoEixos() {
     return {
@@ -195,10 +181,6 @@ function configuracaoEixos() {
         }
     };
 }
-
-// ==========================================
-// GRÁFICO 1 - POKÉMON MAIS UTILIZADOS
-// ==========================================
 
 function criarGraficoMaisUsados(dados) {
     const utilizacaoPokemon = {};
@@ -345,10 +327,6 @@ function criarGraficoMaisUsados(dados) {
     });
 }
 
-// ==========================================
-// GRÁFICO 2 - UTILIZAÇÃO POR GERAÇÃO
-// ==========================================
-
 function criarGraficoGeracoes(dados) {
     const utilizacaoGeracoes = {};
 
@@ -482,9 +460,6 @@ function criarGraficoGeracoes(dados) {
         }
     });
 }
-// ==========================================
-// GRÁFICO 3 - DISTRIBUIÇÃO DOS TIPOS
-// ==========================================
 
 function criarGraficoTipos() {
     if (pokemonValidos.length === 0) {
@@ -502,26 +477,26 @@ function criarGraficoTipos() {
     const tiposOrdenados = Object.entries(contagemTipos)
         .sort((a, b) => b[1] - a[1]);
         
-        const coresTipos = {
-    normal: "#A8A77A",
-    fire: "#EE8130",
-    water: "#6390F0",
-    electric: "#F7D02C",
-    grass: "#7AC74C",
-    ice: "#96D9D6",
-    fighting: "#C22E28",
-    poison: "#A33EA1",
-    ground: "#E2BF65",
-    flying: "#A98FF3",
-    psychic: "#F95587",
-    bug: "#A6B91A",
-    rock: "#B6A136",
-    ghost: "#735797",
-    dragon: "#6F35FC",
-    dark: "#705746",
-    steel: "#B7B7CE",
-    fairy: "#D685AD"
-};
+    const coresTipos = {
+        normal: "#A8A77A",
+        fire: "#EE8130",
+        water: "#6390F0",
+        electric: "#F7D02C",
+        grass: "#7AC74C",
+        ice: "#96D9D6",
+        fighting: "#C22E28",
+        poison: "#A33EA1",
+        ground: "#E2BF65",
+        flying: "#A98FF3",
+        psychic: "#F95587",
+        bug: "#A6B91A",
+        rock: "#B6A136",
+        ghost: "#735797",
+        dragon: "#6F35FC",
+        dark: "#705746",
+        steel: "#B7B7CE",
+        fairy: "#D685AD"
+    };
 
     const canvas = document.getElementById("grafico-tipos");
 
@@ -543,7 +518,7 @@ function criarGraficoTipos() {
 
                 backgroundColor: tiposOrdenados.map(
                      item => coresTipos[item[0].toLowerCase()] || "#A8A8A8"
-                    ),
+                ),
 
                 borderColor: coresGrafico.fundo,
                 borderWidth: 4,
@@ -584,9 +559,6 @@ function criarGraficoTipos() {
         }
     });
 }
-// ==========================================
-// GRÁFICO 4 - COMPARAÇÃO DO MEU TIME
-// ==========================================
 
 function criarGraficoComparacao() {
     if (pokemonValidos.length === 0) {
@@ -736,10 +708,6 @@ function criarGraficoComparacao() {
     });
 }
 
-// ==========================================
-// BUSCAR DETALHES DE UM POKÉMON NA API
-// ==========================================
-
 async function buscarDetalhesPokemon(nome) {
     const nomeAPI = ajustarNome(nome);
 
@@ -772,10 +740,6 @@ async function buscarDetalhesPokemon(nome) {
     };
 }
 
-// ==========================================
-// BARRAS DE ATRIBUTOS
-// ==========================================
-
 function gerarBarraAtributo(nome, valor) {
     const porcentagem = Math.min((valor / 255) * 100, 100);
 
@@ -795,10 +759,6 @@ function gerarBarraAtributo(nome, valor) {
         </div>
     `;
 }
-
-// ==========================================
-// CONSULTAR POKÉMON
-// ==========================================
 
 async function consultarPokemon() {
     const campoBusca = document.getElementById("buscar-analise");
@@ -881,10 +841,6 @@ async function consultarPokemon() {
     }
 }
 
-// ==========================================
-// ADICIONAR POKÉMON AO TIME
-// ==========================================
-
 async function adicionarPokemonTime() {
     const selecionarPokemon = document.getElementById("selecionar-pokemon");
     const nomeSelecionado = selecionarPokemon.value.trim().toLowerCase();
@@ -934,10 +890,6 @@ async function adicionarPokemonTime() {
     }
 }
 
-// ==========================================
-// ATUALIZAR LISTA DO MEU TIME
-// ==========================================
-
 function atualizarListaTime() {
     const lista = document.getElementById("lista-time");
 
@@ -980,10 +932,6 @@ function atualizarListaTime() {
     criarGraficoComparacao();
 }
 
-// ==========================================
-// CARREGAR POKÉDEX
-// ==========================================
-
 async function carregarPokedex() {
     try {
         const resposta = await fetch(
@@ -1016,10 +964,6 @@ async function carregarPokedex() {
         console.error("Erro ao carregar a Pokédex:", erro);
     }
 }
-
-// ==========================================
-// CARREGAR DADOS DO DASHBOARD
-// ==========================================
 
 async function carregarDados() {
     try {
@@ -1067,13 +1011,11 @@ async function carregarDados() {
             };
         });
 
-        // Criar os gráficos
         criarGraficoMaisUsados(dadosCompletos);
         criarGraficoGeracoes(dadosCompletos);
         criarGraficoTipos();
         criarGraficoComparacao();
 
-        // Atualizar os indicadores
         const totalPokemon = pokemonValidos.length;
 
         const pokemonComMaiorSoma = pokemonValidos.reduce(
@@ -1137,10 +1079,6 @@ async function carregarDados() {
     }
 }
 
-// ==========================================
-// EVENTOS
-// ==========================================
-
 document.getElementById("adicionar-pokemon").addEventListener(
     "click",
     adicionarPokemonTime
@@ -1150,10 +1088,6 @@ document.getElementById("consultar-pokemon").addEventListener(
     "click",
     consultarPokemon
 );
-
-// ==========================================
-// INICIALIZAÇÃO
-// ==========================================
 
 carregarDados();
 carregarPokedex();
