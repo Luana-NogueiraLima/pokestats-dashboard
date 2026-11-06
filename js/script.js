@@ -482,7 +482,6 @@ function criarGraficoGeracoes(dados) {
         }
     });
 }
-
 // ==========================================
 // GRÁFICO 3 - DISTRIBUIÇÃO DOS TIPOS
 // ==========================================
@@ -502,27 +501,27 @@ function criarGraficoTipos() {
 
     const tiposOrdenados = Object.entries(contagemTipos)
         .sort((a, b) => b[1] - a[1]);
-
-    const coresTipos = {
-        normal: "#A8A77A",
-        fire: "#EE8130",
-        water: "#6390F0",
-        electric: "#F7D02C",
-        grass: "#7AC74C",
-        ice: "#96D9D6",
-        fighting: "#C22E28",
-        poison: "#A33EA1",
-        ground: "#E2BF65",
-        flying: "#A98FF3",
-        psychic: "#F95587",
-        bug: "#A6B91A",
-        rock: "#B6A136",
-        ghost: "#735797",
-        dragon: "#6F35FC",
-        dark: "#705746",
-        steel: "#B7B7CE",
-        fairy: "#D685AD"
-    };
+        
+        const coresTipos = {
+    normal: "#A8A77A",
+    fire: "#EE8130",
+    water: "#6390F0",
+    electric: "#F7D02C",
+    grass: "#7AC74C",
+    ice: "#96D9D6",
+    fighting: "#C22E28",
+    poison: "#A33EA1",
+    ground: "#E2BF65",
+    flying: "#A98FF3",
+    psychic: "#F95587",
+    bug: "#A6B91A",
+    rock: "#B6A136",
+    ghost: "#735797",
+    dragon: "#6F35FC",
+    dark: "#705746",
+    steel: "#B7B7CE",
+    fairy: "#D685AD"
+};
 
     const canvas = document.getElementById("grafico-tipos");
 
@@ -536,20 +535,17 @@ function criarGraficoTipos() {
         type: "doughnut",
 
         data: {
-            labels: tiposOrdenados.map(item =>
-                traduzirTipo(item[0])
-            ),
+            labels: tiposOrdenados.map(item => traduzirTipo(item[0])),
 
             datasets: [{
                 label: "Quantidade de Pokémon",
-
                 data: tiposOrdenados.map(item => item[1]),
 
                 backgroundColor: tiposOrdenados.map(
-                    item => coresTipos[item[0]] || coresGrafico.azul
-                ),
+                     item => coresTipos[item[0].toLowerCase()] || "#A8A8A8"
+                    ),
 
-                borderColor: "#26323A",
+                borderColor: coresGrafico.fundo,
                 borderWidth: 4,
                 hoverBorderWidth: 5,
                 hoverOffset: 10,
@@ -565,18 +561,7 @@ function criarGraficoTipos() {
 
             plugins: {
                 legend: {
-                    display: true,
-                    position: "bottom",
-
-                    labels: {
-                        color: coresGrafico.texto,
-                        font: fonteGraficos,
-                        usePointStyle: true,
-                        pointStyle: "circle",
-                        padding: 14,
-                        boxWidth: 8,
-                        boxHeight: 8
-                    }
+                    ...configuracaoLegenda
                 },
 
                 tooltip: {
@@ -589,8 +574,7 @@ function criarGraficoTipos() {
                                 0
                             );
 
-                            const porcentagem =
-                                (context.raw / total) * 100;
+                            const porcentagem = (context.raw / total) * 100;
 
                             return ` ${context.label}: ${context.raw} Pokémon (${porcentagem.toFixed(1)}%)`;
                         }
@@ -600,7 +584,6 @@ function criarGraficoTipos() {
         }
     });
 }
-
 // ==========================================
 // GRÁFICO 4 - COMPARAÇÃO DO MEU TIME
 // ==========================================

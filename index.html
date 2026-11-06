@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -24,8 +23,13 @@
 
         <h1>Poké<span>Stats</span></h1>
 
-        <nav class="menu">
-            <a href="#kpis">Visão geral</a>
+        <button class="menu-toggle" id="menu-toggle"
+                aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
+            <span></span><span></span><span></span>
+        </button>
+
+        <nav class="menu" id="menu">
+            <a href="#visao-geral" class="ativa">Visão geral</a>
             <a href="#dashboard">Dashboard</a>
             <a href="#analises">Pokédex</a>
             <a href="#meu-time">Meu time</a>
@@ -36,95 +40,86 @@
 
     <main>
 
-        <!-- BANNER PRINCIPAL -->
+        <!-- ABA: VISÃO GERAL -->
 
-        <section class="banner">
+        <div id="visao-geral" class="aba ativa">
 
-            <div class="banner-conteudo">
+            <!-- BANNER PRINCIPAL -->
 
-                <span class="banner-etiqueta">
-                    Bem-vindo ao PokéStats
-                </span>
+            <section class="banner">
 
-                <h2>Explore o universo Pokémon!</h2>
+                <div class="banner-conteudo">
 
-                <p>
-                    Descubra informações, explore estatísticas,
-                    compare atributos e monte seu próprio time.
-                    Sua jornada pelo mundo Pokémon começa aqui!
-                </p>
+                    <span class="banner-etiqueta">
+                        Bem-vindo ao PokéStats
+                    </span>
 
-                <div class="banner-botoes">
+                    <h2>Explore o universo Pokémon!</h2>
 
-                    <a href="#analises" class="botao botao-amarelo">
-                        Explorar Pokédex
-                    </a>
+                    <p>
+                        Descubra informações, explore estatísticas,
+                        compare atributos e monte seu próprio time.
+                        Sua jornada pelo mundo Pokémon começa aqui!
+                    </p>
 
-                    <a href="#dashboard" class="botao botao-contorno">
-                        Ver estatísticas
-                    </a>
+                    <div class="banner-botoes">
+
+                        <a href="#analises" class="botao botao-amarelo">
+                            Explorar Pokédex
+                        </a>
+
+                        <a href="#dashboard" class="botao botao-contorno">
+                            Ver estatísticas
+                        </a>
+
+                    </div>
 
                 </div>
 
-            </div>
+                <div class="banner-imagem">
 
-            <div class="banner-imagem">
+                    <img
+                        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/25.png"
+                        alt="Pikachu"
+                    >
 
-                <img
-                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/25.png"
-                    alt="Pikachu"
-                >
+                </div>
 
-            </div>
-
-        </section>
+            </section>
 
 
-        <!-- VISÃO GERAL / KPIs -->
+            <!-- VISÃO GERAL / KPIs -->
 
-        <section id="kpis" class="grid-kpis">
+            <section id="kpis" class="grid-kpis">
 
-            <article class="card">
+                <article class="card">
+                    <h2>Pokémon analisados</h2>
+                    <p id="kpi-total">0</p>
+                </article>
 
-                <h2>Pokémon analisados</h2>
+                <article class="card">
+                    <h2>Maior soma de atributos</h2>
+                    <p id="kpi-maior-soma">-</p>
+                </article>
 
-                <p id="kpi-total">0</p>
+                <article class="card">
+                    <h2>Tipo mais comum</h2>
+                    <p id="kpi-tipo">-</p>
+                </article>
 
-            </article>
+                <article class="card">
+                    <h2>Média de HP</h2>
+                    <p id="kpi-hp">0</p>
+                </article>
 
+            </section>
 
-            <article class="card">
-
-                <h2>Maior soma de atributos</h2>
-
-                <p id="kpi-maior-soma">-</p>
-
-            </article>
-
-
-            <article class="card">
-
-                <h2>Tipo mais comum</h2>
-
-                <p id="kpi-tipo">-</p>
-
-            </article>
+        </div>
 
 
-            <article class="card">
+        <!-- ABA: DASHBOARD -->
 
-                <h2>Média de HP</h2>
-
-                <p id="kpi-hp">0</p>
-
-            </article>
-
-        </section>
-
-
-        <!-- DASHBOARD -->
-
-        <section id="dashboard">
+        <section id="dashboard" class="aba">
 
             <div class="titulo-secao">
 
@@ -143,29 +138,18 @@
             <div class="grid-graficos">
 
                 <article class="card">
-
                     <h2>Pokémon mais utilizados</h2>
-
                     <canvas id="grafico-mais-usados"></canvas>
-
                 </article>
 
-
                 <article class="card">
-
                     <h2>Utilização por geração</h2>
-
                     <canvas id="grafico-geracoes"></canvas>
-
                 </article>
 
-
                 <article class="card">
-
                     <h2>Distribuição de Pokémon por tipo</h2>
-
                     <canvas id="grafico-tipos"></canvas>
-
                 </article>
 
             </div>
@@ -173,9 +157,9 @@
         </section>
 
 
-        <!-- CONSULTA DE POKÉMON -->
+        <!-- ABA: POKÉDEX -->
 
-        <section id="analises" class="card">
+        <section id="analises" class="card aba">
 
             <div class="titulo-secao">
 
@@ -218,9 +202,9 @@
         </section>
 
 
-        <!-- MEU TIME -->
+        <!-- ABA: MEU TIME -->
 
-        <section id="meu-time" class="card">
+        <section id="meu-time" class="card aba">
 
             <div class="titulo-secao">
 
@@ -276,9 +260,9 @@
         </section>
 
 
-        <!-- MINHAS ANÁLISES -->
+        <!-- ABA: MINHAS ANÁLISES -->
 
-        <section id="minhas-analises" class="card">
+        <section id="minhas-analises" class="card aba">
 
             <div class="titulo-secao">
 
@@ -381,6 +365,62 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script src="js/script.js"></script>
+
+    <!-- ABAS E MENU SANDUÍCHE -->
+
+    <script>
+    (function () {
+        const abas = document.querySelectorAll(".aba");
+        const links = document.querySelectorAll(".menu a");
+        const menu = document.getElementById("menu");
+        const botao = document.getElementById("menu-toggle");
+
+        function abrirAba(id, atualizarHash = true) {
+            const alvo = document.getElementById(id);
+            if (!alvo || !alvo.classList.contains("aba")) return false;
+
+            abas.forEach(aba => aba.classList.toggle("ativa", aba === alvo));
+            links.forEach(link =>
+                link.classList.toggle("ativa", link.getAttribute("href") === "#" + id)
+            );
+
+            if (atualizarHash) history.replaceState(null, "", "#" + id);
+
+            window.scrollTo({ top: 0, behavior: "smooth" });
+
+            // faz o Chart.js recalcular o tamanho dos gráficos da aba que apareceu
+            window.dispatchEvent(new Event("resize"));
+            return true;
+        }
+
+        function fecharMenu() {
+            menu.classList.remove("aberto");
+            botao.setAttribute("aria-expanded", "false");
+            botao.setAttribute("aria-label", "Abrir menu");
+        }
+
+        botao.addEventListener("click", () => {
+            const aberto = menu.classList.toggle("aberto");
+            botao.setAttribute("aria-expanded", String(aberto));
+            botao.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
+        });
+
+        document.addEventListener("click", (e) => {
+            const link = e.target.closest('a[href^="#"]');
+            if (!link) return;
+
+            const id = link.getAttribute("href").slice(1);
+            if (abrirAba(id)) {
+                e.preventDefault();
+                fecharMenu();
+            }
+        });
+
+        if (!abrirAba(location.hash.slice(1), false)) {
+            abrirAba("visao-geral", false);
+        }
+    })();
+    </script>
 
 </body>
 

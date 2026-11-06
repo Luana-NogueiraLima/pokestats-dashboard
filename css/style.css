@@ -505,7 +505,7 @@ button:active {
 
 .grid-graficos .card:last-child {
     grid-column: 1 / -1;
-    border-top-color: var(--amarelo);
+    min-height: 500px;
 }
 
 .grid-graficos canvas {
@@ -514,7 +514,8 @@ button:active {
 }
 
 .grid-graficos .card:last-child canvas {
-    max-height: 320px;
+    height: 400px !important;
+    max-height: 400px;
 }
 
 /* =========================================
@@ -1005,5 +1006,122 @@ textarea::placeholder {
 
     .menu {
         gap: 10px;
+    }
+}
+/* =========================================
+   ABAS
+========================================= */
+
+.aba {
+    display: none;
+}
+
+.aba.ativa {
+    display: block;
+    animation: aparecer 0.3s ease;
+}
+
+.aba > section {
+    margin-bottom: 35px;
+}
+
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.menu a.ativa {
+    color: var(--amarelo);
+}
+
+.menu a.ativa::after {
+    width: 100%;
+}
+
+/* =========================================
+   MENU SANDUÍCHE
+========================================= */
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+}
+
+.menu-toggle:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: none;
+    box-shadow: none;
+}
+
+.menu-toggle span {
+    display: block;
+    height: 3px;
+    background: #ffffff;
+    border-radius: 3px;
+    transition: 0.25s;
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (max-width: 900px) {
+    .topo {
+        position: sticky;
+        flex-direction: row;
+        flex-wrap: wrap;
+        min-height: 72px;
+        padding: 12px 4%;
+        gap: 0 15px;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .menu {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px 0 4px;
+    }
+
+    .menu.aberto {
+        display: flex;
+    }
+
+    .menu a {
+        padding: 14px 6px;
+        font-size: 0.95rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .menu a::after {
+        display: none;
+    }
+
+    .menu a.ativa {
+        background: rgba(0, 0, 0, 0.18);
     }
 }
