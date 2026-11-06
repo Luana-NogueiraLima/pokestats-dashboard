@@ -5,83 +5,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PokéStats - Dashboard Pokémon</title>
+
+    <meta
+        name="description"
+        content="PokéStats: explore estatísticas, consulte Pokémon, compare atributos e monte seu time."
+    >
+
+    <title>PokéStats | Explore o universo Pokémon</title>
+
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
+    <!-- CABEÇALHO -->
+
     <header class="topo">
-        <h1>PokéStats</h1>
+
+        <h1>Poké<span>Stats</span></h1>
 
         <nav class="menu">
             <a href="#kpis">Visão geral</a>
             <a href="#dashboard">Dashboard</a>
-            <a href="#analises">Analisar Pokémon</a>
-            <a href="#meu-time">Meu Time</a>
+            <a href="#analises">Pokédex</a>
+            <a href="#meu-time">Meu time</a>
             <a href="#minhas-analises">Minhas análises</a>
         </nav>
+
     </header>
 
     <main>
 
+        <!-- BANNER PRINCIPAL -->
+
+        <section class="banner">
+
+            <div class="banner-conteudo">
+
+                <span class="banner-etiqueta">
+                    Bem-vindo ao PokéStats
+                </span>
+
+                <h2>Explore o universo Pokémon!</h2>
+
+                <p>
+                    Descubra informações, explore estatísticas,
+                    compare atributos e monte seu próprio time.
+                    Sua jornada pelo mundo Pokémon começa aqui!
+                </p>
+
+                <div class="banner-botoes">
+
+                    <a href="#analises" class="botao botao-amarelo">
+                        Explorar Pokédex
+                    </a>
+
+                    <a href="#dashboard" class="botao botao-contorno">
+                        Ver estatísticas
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="banner-imagem">
+
+                <img
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/25.png"
+                    alt="Pikachu"
+                >
+
+            </div>
+
+        </section>
+
+
+        <!-- VISÃO GERAL / KPIs -->
+
         <section id="kpis" class="grid-kpis">
 
             <article class="card">
+
                 <h2>Pokémon analisados</h2>
+
                 <p id="kpi-total">0</p>
+
             </article>
 
+
             <article class="card">
+
                 <h2>Maior soma de atributos</h2>
+
                 <p id="kpi-maior-soma">-</p>
+
             </article>
 
+
             <article class="card">
+
                 <h2>Tipo mais comum</h2>
+
                 <p id="kpi-tipo">-</p>
+
             </article>
 
+
             <article class="card">
+
                 <h2>Média de HP</h2>
+
                 <p id="kpi-hp">0</p>
+
             </article>
 
         </section>
 
+
+        <!-- DASHBOARD -->
+
         <section id="dashboard">
 
-            <h2>Dashboard</h2>
+            <div class="titulo-secao">
+
+                <span>Dados e estatísticas</span>
+
+                <h2>Dashboard Pokémon</h2>
+
+                <p>
+                    Explore os dados de utilização, gerações
+                    e distribuição dos tipos de Pokémon.
+                </p>
+
+            </div>
+
 
             <div class="grid-graficos">
 
                 <article class="card">
+
                     <h2>Pokémon mais utilizados</h2>
+
                     <canvas id="grafico-mais-usados"></canvas>
+
                 </article>
 
+
                 <article class="card">
+
                     <h2>Utilização por geração</h2>
+
                     <canvas id="grafico-geracoes"></canvas>
+
                 </article>
 
+
                 <article class="card">
+
                     <h2>Distribuição de Pokémon por tipo</h2>
+
                     <canvas id="grafico-tipos"></canvas>
+
                 </article>
 
             </div>
 
         </section>
 
+
+        <!-- CONSULTA DE POKÉMON -->
+
         <section id="analises" class="card">
 
-            <h2>Analisar Pokémon</h2>
+            <div class="titulo-secao">
 
-            <p>
-                Consulte um Pokémon para visualizar sua imagem,
-                seus tipos e seus atributos.
-            </p>
+                <span>Pokédex</span>
+
+                <h2>Encontre seu Pokémon</h2>
+
+                <p>
+                    Pesquise um Pokémon para descobrir sua imagem,
+                    seus tipos e seus atributos.
+                </p>
+
+            </div>
+
 
             <input
                 type="search"
@@ -93,24 +201,40 @@
 
             <datalist id="lista-pokedex"></datalist>
 
+
             <button id="consultar-pokemon">
                 Consultar Pokémon
             </button>
 
+
             <div id="detalhes-pokemon">
-                <p>Digite o nome de um Pokémon para consultar seus dados.</p>
+
+                <p>
+                    Digite o nome de um Pokémon para consultar seus dados.
+                </p>
+
             </div>
 
         </section>
 
+
+        <!-- MEU TIME -->
+
         <section id="meu-time" class="card">
 
-            <h2>Meu Time</h2>
+            <div class="titulo-secao">
 
-            <p>
-                Escolha até seis Pokémon para montar seu time e comparar
-                seus atributos com a média geral dos Pokémon analisados.
-            </p>
+                <span>Monte sua equipe</span>
+
+                <h2>Meu time Pokémon</h2>
+
+                <p>
+                    Escolha até seis Pokémon para montar seu time
+                    e comparar seus atributos com a média geral.
+                </p>
+
+            </div>
+
 
             <input
                 type="search"
@@ -124,13 +248,17 @@
                 Adicionar ao time
             </button>
 
+
             <div id="lista-time">
+
                 <p>Seu time ainda está vazio.</p>
+
             </div>
+
 
             <article class="card comparacao-card">
 
-                <h3>Meu Time vs. Média Geral</h3>
+                <h3>Meu time vs. Média geral</h3>
 
                 <p>
                     Compare os atributos médios do seu time
@@ -138,53 +266,121 @@
                 </p>
 
                 <div class="container-radar">
+
                     <canvas id="grafico-comparacao"></canvas>
+
                 </div>
 
             </article>
 
         </section>
 
+
+        <!-- MINHAS ANÁLISES -->
+
         <section id="minhas-analises" class="card">
 
-    <h2>Minhas análises Pokémon</h2>
+            <div class="titulo-secao">
 
-    <p>Cadastre e organize suas análises de Pokémon.</p>
+                <span>Seu espaço de pesquisa</span>
 
-    <form id="form-analise">
+                <h2>Minhas análises Pokémon</h2>
 
-        <label for="nome-pokemon">Nome do Pokémon</label>
-        <input type="text" id="nome-pokemon" required>
+                <p>
+                    Cadastre, organize e consulte suas próprias
+                    análises de Pokémon.
+                </p>
 
-        <label for="categoria-analise">Categoria ou estratégia</label>
-        <input type="text" id="categoria-analise" required>
+            </div>
 
-        <label for="descricao-analise">Descrição da análise</label>
-        <textarea id="descricao-analise" required></textarea>
 
-        <label for="data-analise">Data da análise</label>
-        <input type="date" id="data-analise" required>
+            <form id="form-analise">
 
-        <button type="submit">Salvar análise</button>
+                <label for="nome-pokemon">
+                    Nome do Pokémon
+                </label>
 
-    </form>
+                <input
+                    type="text"
+                    id="nome-pokemon"
+                    placeholder="Ex.: Pikachu"
+                    required
+                >
 
-    <div id="lista-analises">
-        <p>Nenhuma análise cadastrada.</p>
-    </div>
 
-</section>
+                <label for="categoria-analise">
+                    Categoria ou estratégia
+                </label>
+
+                <input
+                    type="text"
+                    id="categoria-analise"
+                    placeholder="Ex.: Estratégia de batalha"
+                    required
+                >
+
+
+                <label for="descricao-analise">
+                    Descrição da análise
+                </label>
+
+                <textarea
+                    id="descricao-analise"
+                    placeholder="Escreva sua análise..."
+                    required
+                ></textarea>
+
+
+                <label for="data-analise">
+                    Data da análise
+                </label>
+
+                <input
+                    type="date"
+                    id="data-analise"
+                    required
+                >
+
+
+                <button type="submit">
+                    Salvar análise
+                </button>
+
+            </form>
+
+
+            <div id="lista-analises">
+
+                <p>Nenhuma análise cadastrada.</p>
+
+            </div>
+
+        </section>
 
     </main>
 
+
+    <!-- RODAPÉ -->
+
     <footer class="rodape">
-        <p>PokéStats - Dashboard Pokémon</p>
+
+        <p>
+            <strong>PokéStats</strong> |
+            Explore, descubra e compare o universo Pokémon.
+        </p>
+
     </footer>
 
-   <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
-   <script src="js/back4app.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-   <script src="js/script.js"></script>
+
+    <!-- SCRIPTS -->
+
+    <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+
+    <script src="js/back4app.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="js/script.js"></script>
 
 </body>
 

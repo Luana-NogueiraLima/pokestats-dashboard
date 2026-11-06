@@ -1,178 +1,588 @@
+/* =========================================
+   POKÉSTATS | IDENTIDADE VISUAL
+========================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Titan+One&display=swap");
+
 :root {
-    --cor-fundo: #f4f5f7;
-    --cor-cartao: #ffffff;
-    --cor-borda: #dcdfe4;
-    --cor-texto: #222222;
-    --cor-texto-suave: #666666;
-    --cor-destaque: #e63946;
-    --cor-azul: #3978C5;
-    --fonte: Arial, sans-serif;
+    --azul-escuro: #161b20;
+    --azul-principal: #e53935;      /* vermelho principal */
+    --azul-claro: #26323a;
+    --vermelho: #e53935;
+    --amarelo: #ffcb05;
+    --verde: #4caf50;
+    --roxo: #b71c1c;
+    --magenta: #ff7043;
+    --laranja: #ff9f1a;
+
+    --fundo: #161b20;
+    --branco: #26323a;  /* superfície dos cards */
+    --texto: #f1f3f4;
+    --texto-suave: #9aa7b0;
+    --borda: rgba(255, 255, 255, 0.10);
+
+    --sombra: 0 6px 18px rgba(0, 0, 0, 0.35);
+    --sombra-hover: 0 10px 26px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(229, 57, 53, 0.55);
+
+    --raio: 18px;
+    --fonte: Arial, Helvetica, sans-serif;
 }
 
+/* =========================================
+   RESET E CONFIGURAÇÕES GERAIS
+========================================= */
+
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 100px;
 }
 
 body {
     font-family: var(--fonte);
-    background: var(--cor-fundo);
-    color: var(--cor-texto);
-    line-height: 1.5;
+    background: linear-gradient(160deg, #1b2229 0%, #161b20 60%, #12171b 100%);
+    background-attachment: fixed;
+    color: var(--texto);
+    line-height: 1.6;
 }
 
-main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
+button,
+input,
+textarea {
+    font: inherit;
 }
 
-main > section {
-    margin-bottom: 1.5rem;
-    scroll-margin-top: 100px;
+button {
+    cursor: pointer;
 }
+
+a {
+    text-decoration: none;
+}
+
+/* =========================================
+   CABEÇALHO
+========================================= */
 
 .topo {
+    min-height: 82px;
+    padding: 0 6%;
+
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
     align-items: center;
-    gap: 0.5rem;
-    padding: 1rem;
-    background: var(--cor-cartao);
-    border-bottom: 3px solid var(--cor-destaque);
+    justify-content: space-between;
+    gap: 25px;
+
+    background: linear-gradient(90deg, #8e1b1b, #c62828);
+    border-bottom: 5px solid var(--amarelo);
+
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 100;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.4);
 }
 
 .topo h1 {
-    font-size: 1.5rem;
+    font-family: "Titan One", "Arial Black", Impact, sans-serif;
+    font-size: 2.3rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    line-height: 1;
+    transform: rotate(-2deg);
+
+    /* preenchimento amarelo Pokémon */
+    color: #ffcb05;
+
+    /* contorno azul grosso por fora das letras */
+    -webkit-text-stroke: 7px #2a5cc7;
+    paint-order: stroke fill;
+
+    /* sombra 3D azul-escura + brilho neon */
+    text-shadow:
+        0 4px 0 #1a3a8f,
+        0 6px 0 #14297a,
+        0 8px 14px rgba(0, 0, 0, 0.45);
+}
+
+.topo h1 span {
+    color: #ffcb05;
 }
 
 .menu {
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 25px;
 }
 
 .menu a {
-    color: var(--cor-texto-suave);
-    text-decoration: none;
-    transition: color 0.2s;
+    color: #ffffff;
+    font-size: 0.88rem;
+    font-weight: bold;
+    transition: 0.25s;
+    position: relative;
+}
+
+.menu a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background: var(--amarelo);
+    left: 0;
+    bottom: -8px;
+    border-radius: 5px;
+    transition: width 0.25s;
 }
 
 .menu a:hover {
-    color: var(--cor-destaque);
+    color: var(--amarelo);
 }
 
+.menu a:hover::after {
+    width: 100%;
+}
+
+/* =========================================
+   CONTEÚDO PRINCIPAL
+========================================= */
+
+main {
+    width: min(1380px, 92%);
+    margin: 0 auto;
+    padding: 35px 0 60px;
+}
+
+main > section {
+    margin-bottom: 35px;
+    scroll-margin-top: 110px;
+}
+
+/* =========================================
+   BANNER PRINCIPAL
+========================================= */
+
+.banner {
+    min-height: 310px;
+    padding: 45px 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+
+    position: relative;
+    overflow: hidden;
+
+    background: linear-gradient(120deg, #7f1414, #b71c1c 60%, #e53935);
+    border: 1px solid var(--borda);
+    border-radius: 24px;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    color: white;
+}
+
+.banner::before {
+    content: "";
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border: 45px solid rgba(255, 255, 255, 0.06);
+    border-radius: 50%;
+    right: 10%;
+    top: -130px;
+}
+
+.banner::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border: 25px solid rgba(229, 57, 53, 0.12);
+    border-radius: 50%;
+    right: -40px;
+    bottom: -100px;
+}
+
+.banner-conteudo {
+    position: relative;
+    z-index: 2;
+    max-width: 650px;
+}
+
+.banner-etiqueta {
+    display: inline-block;
+    padding: 7px 14px;
+    margin-bottom: 16px;
+
+    background: rgba(229, 57, 53, 0.14);
+    color: var(--azul-principal);
+
+    border: 1px solid rgba(229, 57, 53, 0.5);
+    border-radius: 30px;
+
+    font-size: 0.78rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.banner h2 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.15;
+    margin-bottom: 15px;
+    font-weight: 900;
+}
+
+.banner p {
+    max-width: 540px;
+    color: #f1f3f4;
+    font-size: 1rem;
+    margin-bottom: 25px;
+}
+
+.banner-botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.banner-imagem {
+    position: relative;
+    z-index: 2;
+    width: 260px;
+    min-width: 200px;
+    text-align: center;
+}
+
+.banner-imagem img {
+    width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 18px rgba(0, 0, 0, 0.35));
+    animation: flutuar 3s ease-in-out infinite;
+}
+
+@keyframes flutuar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* =========================================
+   BOTÕES
+========================================= */
+
+.botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 20px;
+    border-radius: 9px;
+
+    font-size: 0.9rem;
+    font-weight: bold;
+
+    transition: 0.25s;
+}
+
+.botao-amarelo {
+    background: var(--amarelo);
+    color: #161b20;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.botao-amarelo:hover {
+    background: #ffdb4d;
+    transform: translateY(-3px);
+}
+
+.botao-contorno {
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    background: transparent;
+}
+
+.botao-contorno:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+button {
+    padding: 12px 20px;
+    background: linear-gradient(90deg, #c62828, #e53935);
+    color: white;
+
+    border: none;
+    border-radius: 9px;
+
+    font-size: 0.9rem;
+    font-weight: bold;
+
+    transition: 0.25s;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #e53935, #ff5a4d);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(229, 57, 53, 0.35);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* =========================================
+   TÍTULOS DAS SEÇÕES
+========================================= */
+
+.titulo-secao {
+    margin-bottom: 22px;
+}
+
+.titulo-secao span {
+    display: block;
+    color: var(--amarelo);
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+}
+
+.titulo-secao h2 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 900;
+    line-height: 1.3;
+}
+
+.titulo-secao p {
+    margin-top: 7px;
+    color: var(--texto-suave);
+    font-size: 0.95rem;
+}
+
+/* =========================================
+   CARDS GERAIS
+========================================= */
+
 .card {
-    background: var(--cor-cartao);
-    border: 1px solid var(--cor-borda);
-    border-radius: 8px;
-    padding: 1rem;
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    padding: 25px;
+
+    backdrop-filter: blur(8px);
+    box-shadow: var(--sombra);
     min-width: 0;
+
+    transition: box-shadow 0.25s, transform 0.25s;
 }
 
 .card h2 {
+    color: #ffffff;
     font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+    font-weight: 800;
+    margin-bottom: 8px;
 }
 
 .card h3 {
-    margin-bottom: 0.5rem;
+    color: var(--azul-principal);
+    font-size: 1.05rem;
+    margin-bottom: 8px;
 }
+
+/* =========================================
+   INDICADORES - KPIs
+========================================= */
 
 #kpis {
-    scroll-margin-top: 100px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
 }
 
-.grid-kpis {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+.grid-kpis .card {
+    position: relative;
+    overflow: hidden;
+
+    min-height: 150px;
+    padding: 25px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+
+    color: white;
+    background: linear-gradient(135deg, #b71c1c, #7f1414);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.grid-kpis .card::after {
+    content: "";
+    position: absolute;
+
+    width: 115px;
+    height: 115px;
+
+    border: 18px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+
+    right: -38px;
+    bottom: -48px;
+}
+
+.grid-kpis .card:nth-child(1) { background: linear-gradient(135deg, #c62828, #7f1414); }
+.grid-kpis .card:nth-child(2) { background: linear-gradient(135deg, #b71c1c, #7f1414); }
+.grid-kpis .card:nth-child(3) { background: linear-gradient(135deg, #c62828, #7f1414); }
+.grid-kpis .card:nth-child(4) { background: linear-gradient(135deg, #b71c1c, #7f1414); }
+
+.grid-kpis .card h2 {
+    position: relative;
+    z-index: 1;
+
+    color: inherit;
+    font-size: 0.92rem;
+    font-weight: bold;
+    opacity: 0.95;
 }
 
 .grid-kpis .card p {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--cor-destaque);
+    position: relative;
+    z-index: 1;
+
+    margin-top: 12px;
+
+    color: inherit;
+    font-size: clamp(1.7rem, 2.5vw, 2.5rem);
+    font-weight: 900;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
 }
 
-#dashboard > h2 {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
+/* =========================================
+   DASHBOARD E GRÁFICOS
+========================================= */
+
+#dashboard {
+    padding-top: 10px;
 }
 
 .grid-graficos {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
 }
 
 .grid-graficos .card {
     min-width: 0;
-    height: 400px;
+    min-height: 390px;
+    padding: 24px;
+
+    border-top: 3px solid var(--azul-principal);
+}
+
+.grid-graficos .card:hover {
+    box-shadow: var(--sombra-hover);
+    transform: translateY(-3px);
+}
+
+.grid-graficos .card h2 {
+    font-size: 1.05rem;
+    margin-bottom: 20px;
+}
+
+.grid-graficos .card:last-child {
+    grid-column: 1 / -1;
+    border-top-color: var(--amarelo);
 }
 
 .grid-graficos canvas {
     width: 100% !important;
-    height: 300px !important;
+    height: 290px !important;
+}
+
+.grid-graficos .card:last-child canvas {
+    max-height: 320px;
+}
+
+/* =========================================
+   CONSULTA DE POKÉMON
+========================================= */
+
+#analises,
+#meu-time,
+#minhas-analises {
+    padding: 30px;
 }
 
 #analises > p,
-#meu-time > p {
-    color: var(--cor-texto-suave);
-    margin-bottom: 1rem;
+#meu-time > p,
+#minhas-analises > p {
+    color: var(--texto-suave);
+    margin-bottom: 22px;
+    max-width: 800px;
 }
 
-#analises input,
-#meu-time input {
+#analises > input,
+#meu-time > input {
+    width: min(100%, 420px);
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* =========================================
+   CAMPOS DE ENTRADA
+========================================= */
+
+input,
+textarea {
     width: 100%;
     max-width: 400px;
-    margin: 0.5rem 0;
+
+    padding: 13px 15px;
+
+    color: var(--texto);
+    background: rgba(22, 28, 33, 0.85);
+
+    border: 1px solid var(--borda);
+    border-radius: 9px;
+
+    outline: none;
+    transition: 0.2s;
 }
 
-button {
-    background: var(--cor-destaque);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 0.65rem 1rem;
-    font-family: var(--fonte);
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s;
+input:focus,
+textarea:focus {
+    background: rgba(38, 50, 58, 0.95);
+    border-color: var(--azul-principal);
+    box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.2), 0 0 14px rgba(229, 57, 53, 0.3);
 }
 
-button:hover {
-    background: #c92f3b;
+input::placeholder,
+textarea::placeholder {
+    color: #78909c;
 }
 
-input {
-    max-width: 100%;
-    background: var(--cor-cartao);
-    color: var(--cor-texto);
-    border: 1px solid var(--cor-borda);
-    border-radius: 4px;
-    padding: 0.6rem;
-    font-family: var(--fonte);
-}
-
-input:focus {
-    outline: 2px solid var(--cor-azul);
-    outline-offset: 2px;
-}
+/* =========================================
+   DETALHES DO POKÉMON
+========================================= */
 
 #detalhes-pokemon {
-    min-height: 150px;
-    color: var(--cor-texto-suave);
-    margin-top: 1rem;
+    min-height: 120px;
+    margin-top: 25px;
+    color: var(--texto-suave);
 }
 
 .detalhes-card {
@@ -180,162 +590,420 @@ input:focus {
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    padding: 25px;
-    margin-top: 20px;
-    background-color: var(--cor-cartao);
-    border: 1px solid var(--cor-borda);
-    border-radius: 12px;
+
+    padding: 30px;
+    margin-top: 15px;
+
+    background:
+        radial-gradient(circle at top, rgba(183, 28, 28, 0.28) 0, transparent 60%),
+        rgba(38, 50, 58, 0.8);
+
+    border: 1px solid var(--borda);
+    border-radius: 20px;
 }
 
 .detalhes-card img {
-    width: 200px;
+    width: 240px;
+    height: 240px;
     max-width: 100%;
     object-fit: contain;
+
+    filter: drop-shadow(0 0 16px rgba(0, 0, 0, 0.35));
+
+    transition: transform 0.3s;
+}
+
+.detalhes-card img:hover {
+    transform: scale(1.08);
 }
 
 .detalhes-card h3 {
+    color: #ffffff;
+    font-size: 1.55rem;
+    font-weight: 900;
     text-transform: capitalize;
+}
+
+.detalhes-card > p {
+    color: var(--texto);
 }
 
 .lista-atributos {
     width: 100%;
-    max-width: 500px;
+    max-width: 560px;
 }
 
 .atributo {
-    margin-bottom: 15px;
+    margin-bottom: 17px;
 }
 
 .atributo-info {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 6px;
+    gap: 15px;
+
+    margin-bottom: 7px;
+
+    color: var(--texto);
+    font-size: 0.9rem;
+    font-weight: bold;
 }
 
 .barra-fundo {
     width: 100%;
-    height: 12px;
-    background-color: var(--cor-borda);
-    border-radius: 10px;
+    height: 11px;
+
+    background: rgba(20, 26, 31, 0.8);
+    border-radius: 20px;
     overflow: hidden;
 }
 
 .barra-valor {
     height: 100%;
-    background-color: var(--cor-azul);
-    border-radius: 10px;
+
+    background: linear-gradient(90deg, #b71c1c, #e53935);
+    border-radius: 20px;
+
     transition: width 0.5s ease;
 }
 
+/* =========================================
+   MEU TIME
+========================================= */
+
 #lista-time {
-    margin-top: 1rem;
+    margin-top: 25px;
 }
 
-#lista-time p {
-    margin-bottom: 0.5rem;
+#lista-time > p {
+    color: var(--texto-suave);
+}
+
+.grid-time {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 18px;
+}
+
+.pokemon-time-card {
+    padding: 18px;
+    text-align: center;
+
+    background: linear-gradient(180deg, rgba(183, 28, 28, 0.22), rgba(38, 50, 58, 0.85));
+    border: 1px solid var(--borda);
+    border-radius: 16px;
+
+    transition: 0.25s;
+}
+
+.pokemon-time-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-hover);
+}
+
+.pokemon-time-card img {
+    width: 125px;
+    height: 125px;
+    max-width: 100%;
+
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(229, 57, 53, 0.35));
+}
+
+.pokemon-time-card h3 {
+    margin: 8px 0;
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.pokemon-time-card p {
+    color: var(--texto-suave);
+    font-size: 0.85rem;
 }
 
 .comparacao-card {
-    margin-top: 1.5rem;
+    margin-top: 30px;
+    background: rgba(31, 40, 47, 0.8);
+    border: 1px solid var(--borda);
+    box-shadow: none;
 }
 
 .container-radar {
     position: relative;
     width: 100%;
-    max-width: 600px;
+    max-width: 650px;
     height: 400px;
     margin: 20px auto;
 }
 
-.rodape {
-    text-align: center;
-    padding: 1rem;
-    color: var(--cor-texto-suave);
-}
-
-@media (min-width: 768px) {
-    .grid-graficos {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    main {
-        padding: 1.5rem;
-    }
-}
-
-@media (max-width: 600px) {
-    .topo {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .menu {
-        gap: 0.8rem;
-    }
-
-    .grid-graficos .card {
-        height: 350px;
-    }
-
-    .grid-graficos canvas {
-        height: 260px !important;
-    }
-
-    .container-radar {
-        height: 320px;
-    }
-
-    #analises button,
-    #meu-time button {
-        width: 100%;
-    }
-}
-
-#minhas-analises > p {
-    color: var(--cor-texto-suave);
-    margin-bottom: 1.5rem;
-}
+/* =========================================
+   MINHAS ANÁLISES
+========================================= */
 
 #form-analise {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
-    max-width: 600px;
+    gap: 9px;
+
+    max-width: 700px;
+    padding: 25px;
+
+    background: rgba(31, 40, 47, 0.8);
+    border: 1px solid var(--borda);
+    border-radius: 15px;
 }
 
 #form-analise label {
+    margin-top: 8px;
+    color: var(--azul-principal);
+    font-size: 0.9rem;
     font-weight: bold;
-    margin-top: 0.5rem;
 }
 
 #form-analise input,
 #form-analise textarea {
     width: 100%;
     max-width: 100%;
-    padding: 0.7rem;
-    border: 1px solid var(--cor-borda);
-    border-radius: 5px;
-    font-family: var(--fonte);
+    background: rgba(20, 26, 31, 0.7);
 }
 
 #form-analise textarea {
-    min-height: 120px;
+    min-height: 130px;
     resize: vertical;
 }
 
 #form-analise button {
-    margin-top: 0.8rem;
+    margin-top: 15px;
     align-self: flex-start;
 }
 
 #lista-analises {
-    margin-top: 2rem;
-    border-top: 1px solid var(--cor-borda);
-    padding-top: 1rem;
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid var(--borda);
 }
 
-@media (max-width: 600px) {
+/* =========================================
+   RODAPÉ
+========================================= */
+
+.rodape {
+    padding: 30px 20px;
+
+    background: linear-gradient(90deg, #8e1b1b, #c62828);
+    border-top: 5px solid var(--amarelo);
+
+    color: white;
+    text-align: center;
+}
+
+.rodape p {
+    font-size: 0.9rem;
+    color: #cfd8dc;
+}
+
+.rodape strong {
+    color: var(--amarelo);
+}
+
+/* =========================================
+   TABLETS
+========================================= */
+
+@media (max-width: 1000px) {
+    .topo {
+        padding: 15px 4%;
+    }
+
+    .menu {
+        gap: 15px;
+    }
+
+    .menu a {
+        font-size: 0.82rem;
+    }
+
+    #kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .banner {
+        padding: 35px;
+    }
+}
+
+/* =========================================
+   CELULARES
+========================================= */
+
+@media (max-width: 650px) {
+    html {
+        scroll-padding-top: 20px;
+    }
+
+    .topo {
+        position: relative;
+        flex-direction: column;
+        padding: 18px 15px;
+        gap: 15px;
+    }
+
+    .topo h1 {
+        font-size: 2rem;
+    }
+
+    .menu {
+        gap: 12px 18px;
+    }
+
+    .menu a {
+        font-size: 0.8rem;
+    }
+
+    main {
+        width: 94%;
+        padding: 22px 0 40px;
+    }
+
+    main > section {
+        margin-bottom: 25px;
+    }
+
+    .banner {
+        min-height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 30px 23px;
+    }
+
+    .banner h2 {
+        font-size: 2rem;
+    }
+
+    .banner p {
+        font-size: 0.9rem;
+    }
+
+    .banner-imagem {
+        width: 180px;
+        align-self: center;
+    }
+
+    .banner-imagem img {
+        max-height: 180px;
+    }
+
+    .titulo-secao h2 {
+        font-size: 1.5rem;
+    }
+
+    #kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .grid-kpis .card {
+        min-height: 125px;
+        padding: 16px;
+    }
+
+    .grid-kpis .card h2 {
+        font-size: 0.78rem;
+    }
+
+    .grid-kpis .card p {
+        font-size: 1.65rem;
+    }
+
+    .grid-graficos {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .grid-graficos .card,
+    .grid-graficos .card:last-child {
+        grid-column: auto;
+        min-height: 350px;
+        padding: 18px;
+    }
+
+    .grid-graficos canvas {
+        height: 260px !important;
+    }
+
+    #analises,
+    #meu-time,
+    #minhas-analises {
+        padding: 20px 16px;
+    }
+
+    #analises > input,
+    #meu-time > input {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 12px;
+    }
+
+    #analises > button,
+    #meu-time > button {
+        width: 100%;
+    }
+
+    .detalhes-card {
+        padding: 20px 12px;
+    }
+
+    .detalhes-card img {
+        width: 190px;
+        height: 190px;
+    }
+
+    .grid-time {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .pokemon-time-card {
+        padding: 12px 8px;
+    }
+
+    .pokemon-time-card img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .container-radar {
+        height: 320px;
+    }
+
+    #form-analise {
+        padding: 17px;
+    }
+
     #form-analise button {
         width: 100%;
+        align-self: stretch;
+    }
+}
+
+/* =========================================
+   TELAS MUITO PEQUENAS
+========================================= */
+
+@media (max-width: 380px) {
+    #kpis {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-time {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .banner h2 {
+        font-size: 1.7rem;
+    }
+
+    .menu {
+        gap: 10px;
     }
 }

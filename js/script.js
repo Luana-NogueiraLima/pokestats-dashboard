@@ -1,4 +1,3 @@
-
 function ajustarNome(nome) {
     const nomesEspeciais = {
         "keldeo": "keldeo-ordinary",
@@ -28,6 +27,115 @@ let pokemonValidos = [];
 let meuTime = [];
 let pokedexCompleta = [];
 
+// ==========================================
+// IDENTIDADE VISUAL DOS GRÁFICOS
+// ==========================================
+
+const coresGrafico = {
+    azul: "#E53935",          // vermelho principal
+    azulClaro: "#FF8A80",
+    azulEscuro: "#1B2229",    // fundo do tooltip
+    roxo: "#9B1C1C",          // vermelho escuro
+    magenta: "#C62828",       // vermelho médio
+    amarelo: "#FFCB05",
+    laranja: "#FF9F1A",
+    vermelho: "#E53935",
+    verde: "#4CAF50",
+    texto: "#F1F3F4",
+    textoSuave: "#9AA7B0",
+    grade: "rgba(255, 255, 255, 0.08)",
+    fundo: "#26323A"
+};
+
+// Degradê vertical (barras em pé): magenta/roxo embaixo -> ciano em cima
+function gradienteVertical(chart) {
+    try {
+        const area = chart.chartArea;
+
+        if (!area || !Number.isFinite(area.top) || !Number.isFinite(area.bottom)) {
+            return coresGrafico.roxo;
+        }
+
+        const g = chart.ctx.createLinearGradient(0, area.bottom, 0, area.top);
+        g.addColorStop(0, coresGrafico.magenta);
+        g.addColorStop(0.5, coresGrafico.roxo);
+        g.addColorStop(1, coresGrafico.azul);
+        return g;
+    } catch (erro) {
+        return coresGrafico.roxo;
+    }
+}
+
+// Degradê horizontal (barras deitadas): magenta -> roxo -> ciano
+function gradienteHorizontal(context) {
+    try {
+        const { chart, element } = context;
+        const area = chart && chart.chartArea;
+
+        if (!area || !element) return coresGrafico.roxo;
+
+        const { base, x } = element.getProps(["base", "x"], true);
+
+        if (!Number.isFinite(base) || !Number.isFinite(x) || base === x) {
+            return coresGrafico.roxo;
+        }
+
+        const g = chart.ctx.createLinearGradient(
+            Math.min(base, x), 0, Math.max(base, x), 0
+        );
+        g.addColorStop(0, coresGrafico.magenta);
+        g.addColorStop(0.45, coresGrafico.roxo);
+        g.addColorStop(1, coresGrafico.azul);
+        return g;
+    } catch (erro) {
+        return coresGrafico.roxo;
+    }
+}
+
+const fonteGraficos = {
+    family: "'Inter', 'Arial', sans-serif",
+    size: 12,
+    weight: "500"
+};
+
+const configuracaoLegenda = {
+    display: true,
+    position: "bottom",
+    labels: {
+        color: coresGrafico.texto,
+        font: fonteGraficos,
+        usePointStyle: true,
+        pointStyle: "circle",
+        padding: 20,
+        boxWidth: 8,
+        boxHeight: 8
+    }
+};
+
+const configuracaoTooltip = {
+    backgroundColor: coresGrafico.azulEscuro,
+    titleColor: "#FFFFFF",
+    bodyColor: "#FFFFFF",
+    borderColor: "rgba(229, 57, 53, 0.8)",
+    borderWidth: 1,
+    padding: 12,
+    cornerRadius: 10,
+    displayColors: true,
+    titleFont: {
+        family: fonteGraficos.family,
+        size: 13,
+        weight: "bold"
+    },
+    bodyFont: {
+        family: fonteGraficos.family,
+        size: 12
+    }
+};
+
+// ==========================================
+// TRADUÇÃO DOS TIPOS
+// ==========================================
+
 function traduzirTipo(tipo) {
     const traducoes = {
         normal: "Normal",
@@ -52,6 +160,45 @@ function traduzirTipo(tipo) {
 
     return traducoes[tipo.toLowerCase()] || tipo;
 }
+
+// ==========================================
+// CONFIGURAÇÃO DOS EIXOS
+// ==========================================
+
+function configuracaoEixos() {
+    return {
+        x: {
+            grid: {
+                color: coresGrafico.grade,
+                drawBorder: false
+            },
+            border: {
+                display: false
+            },
+            ticks: {
+                color: coresGrafico.textoSuave,
+                font: fonteGraficos
+            }
+        },
+        y: {
+            grid: {
+                color: coresGrafico.grade,
+                drawBorder: false
+            },
+            border: {
+                display: false
+            },
+            ticks: {
+                color: coresGrafico.textoSuave,
+                font: fonteGraficos
+            }
+        }
+    };
+}
+
+// ==========================================
+// GRÁFICO 1 - POKÉMON MAIS UTILIZADOS
+// ==========================================
 
 function criarGraficoMaisUsados(dados) {
     const utilizacaoPokemon = {};
@@ -78,54 +225,129 @@ function criarGraficoMaisUsados(dados) {
         .sort((a, b) => b.media - a.media)
         .slice(0, 10);
 
-    const contexto = document
-        .getElementById("grafico-mais-usados")
-        .getContext("2d");
+    const canvas = document.getElementById("grafico-mais-usados");
+
+    if (!canvas) return;
 
     if (graficoMaisUsados) {
         graficoMaisUsados.destroy();
     }
 
-    graficoMaisUsados = new Chart(contexto, {
+    graficoMaisUsados = new Chart(canvas.getContext("2d"), {
         type: "bar",
+
         data: {
-            labels: ranking.map(
-                pokemon => formatarNomeExibicao(pokemon.nome)
+            labels: ranking.map(pokemon =>
+                formatarNomeExibicao(pokemon.nome)
             ),
+
             datasets: [{
-                label: "Média de utilização (%)",
+                label: "Utilização média",
                 data: ranking.map(pokemon => pokemon.media),
-                backgroundColor: "#3978C5",
-                borderRadius: 6
+
+                backgroundColor: gradienteHorizontal,
+
+                borderRadius: 8,
+                borderSkipped: false,
+                barThickness: 17,
+                maxBarThickness: 22
             }]
         },
+
         options: {
             indexAxis: "y",
             responsive: true,
             maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: true
+
+            layout: {
+                padding: {
+                    right: 15,
+                    left: 5
                 }
             },
+
+            plugins: {
+                legend: {
+                    ...configuracaoLegenda,
+                    position: "bottom"
+                },
+
+                tooltip: {
+                    ...configuracaoTooltip,
+
+                    callbacks: {
+                        label: function (context) {
+                            return ` Utilização: ${context.raw.toFixed(2)}%`;
+                        }
+                    }
+                }
+            },
+
             scales: {
                 x: {
                     beginAtZero: true,
+
+                    grid: {
+                        color: coresGrafico.grade,
+                        drawBorder: false
+                    },
+
+                    border: {
+                        display: false
+                    },
+
+                    ticks: {
+                        color: coresGrafico.textoSuave,
+                        font: fonteGraficos,
+
+                        callback: function (valor) {
+                            return valor + "%";
+                        }
+                    },
+
                     title: {
                         display: true,
-                        text: "Utilização média (%)"
+                        text: "Utilização média (%)",
+                        color: coresGrafico.texto,
+                        font: {
+                            ...fonteGraficos,
+                            weight: "bold"
+                        }
                     }
                 },
+
                 y: {
+                    grid: {
+                        display: false
+                    },
+
+                    border: {
+                        display: false
+                    },
+
+                    ticks: {
+                        color: coresGrafico.texto,
+                        font: fonteGraficos
+                    },
+
                     title: {
                         display: true,
-                        text: "Pokémon"
+                        text: "Pokémon",
+                        color: coresGrafico.texto,
+                        font: {
+                            ...fonteGraficos,
+                            weight: "bold"
+                        }
                     }
                 }
             }
         }
     });
 }
+
+// ==========================================
+// GRÁFICO 2 - UTILIZAÇÃO POR GERAÇÃO
+// ==========================================
 
 function criarGraficoGeracoes(dados) {
     const utilizacaoGeracoes = {};
@@ -152,51 +374,118 @@ function criarGraficoGeracoes(dados) {
         }))
         .sort((a, b) => a.numero - b.numero);
 
-    const contexto = document
-        .getElementById("grafico-geracoes")
-        .getContext("2d");
+    const canvas = document.getElementById("grafico-geracoes");
+
+    if (!canvas) return;
 
     if (graficoGeracoes) {
         graficoGeracoes.destroy();
     }
 
-    graficoGeracoes = new Chart(contexto, {
+    graficoGeracoes = new Chart(canvas.getContext("2d"), {
         type: "bar",
+
         data: {
             labels: geracoes.map(item => item.nome),
+
             datasets: [{
-                label: "Média de utilização (%)",
+                label: "Utilização média",
                 data: geracoes.map(item => item.media),
-                backgroundColor: "#3978C5",
-                borderRadius: 6
+
+                backgroundColor: context => gradienteVertical(context.chart),
+                hoverBackgroundColor: coresGrafico.laranja,
+
+                borderRadius: 9,
+                borderSkipped: false,
+                barPercentage: 0.65,
+                categoryPercentage: 0.75
             }]
         },
+
         options: {
             responsive: true,
             maintainAspectRatio: false,
+
             plugins: {
                 legend: {
-                    display: true
+                    ...configuracaoLegenda
+                },
+
+                tooltip: {
+                    ...configuracaoTooltip,
+
+                    callbacks: {
+                        label: function (context) {
+                            return ` Utilização: ${context.raw.toFixed(2)}%`;
+                        }
+                    }
                 }
             },
+
             scales: {
                 x: {
+                    grid: {
+                        display: false
+                    },
+
+                    border: {
+                        display: false
+                    },
+
+                    ticks: {
+                        color: coresGrafico.texto,
+                        font: fonteGraficos
+                    },
+
                     title: {
                         display: true,
-                        text: "Geração"
+                        text: "Geração",
+                        color: coresGrafico.texto,
+                        font: {
+                            ...fonteGraficos,
+                            weight: "bold"
+                        }
                     }
                 },
+
                 y: {
                     beginAtZero: true,
+
+                    grid: {
+                        color: coresGrafico.grade
+                    },
+
+                    border: {
+                        display: false
+                    },
+
+                    ticks: {
+                        color: coresGrafico.textoSuave,
+                        font: fonteGraficos,
+
+                        callback: function (valor) {
+                            return valor + "%";
+                        }
+                    },
+
                     title: {
                         display: true,
-                        text: "Utilização média (%)"
+                        text: "Utilização média (%)",
+                        color: coresGrafico.texto,
+                        font: {
+                            ...fonteGraficos,
+                            weight: "bold"
+                        }
                     }
                 }
             }
         }
     });
 }
+
+// ==========================================
+// GRÁFICO 3 - DISTRIBUIÇÃO DOS TIPOS
+// ==========================================
 
 function criarGraficoTipos() {
     if (pokemonValidos.length === 0) {
@@ -214,59 +503,96 @@ function criarGraficoTipos() {
     const tiposOrdenados = Object.entries(contagemTipos)
         .sort((a, b) => b[1] - a[1]);
 
-    const contexto = document
-        .getElementById("grafico-tipos")
-        .getContext("2d");
+    const coresTipos = {
+        normal: "#A8A77A",
+        fire: "#EE8130",
+        water: "#6390F0",
+        electric: "#F7D02C",
+        grass: "#7AC74C",
+        ice: "#96D9D6",
+        fighting: "#C22E28",
+        poison: "#A33EA1",
+        ground: "#E2BF65",
+        flying: "#A98FF3",
+        psychic: "#F95587",
+        bug: "#A6B91A",
+        rock: "#B6A136",
+        ghost: "#735797",
+        dragon: "#6F35FC",
+        dark: "#705746",
+        steel: "#B7B7CE",
+        fairy: "#D685AD"
+    };
+
+    const canvas = document.getElementById("grafico-tipos");
+
+    if (!canvas) return;
 
     if (graficoTipos) {
         graficoTipos.destroy();
     }
 
-    graficoTipos = new Chart(contexto, {
+    graficoTipos = new Chart(canvas.getContext("2d"), {
         type: "doughnut",
+
         data: {
-            labels: tiposOrdenados.map(
-                item => traduzirTipo(item[0])
+            labels: tiposOrdenados.map(item =>
+                traduzirTipo(item[0])
             ),
+
             datasets: [{
                 label: "Quantidade de Pokémon",
+
                 data: tiposOrdenados.map(item => item[1]),
-                backgroundColor: [
-                    "#A8A77A",
-                    "#EE8130",
-                    "#6390F0",
-                    "#F7D02C",
-                    "#7AC74C",
-                    "#96D9D6",
-                    "#C22E28",
-                    "#A33EA1",
-                    "#E2BF65",
-                    "#A98FF3",
-                    "#F95587",
-                    "#A6B91A",
-                    "#B6A136",
-                    "#735797",
-                    "#6F35FC",
-                    "#705746",
-                    "#B7B7CE",
-                    "#D685AD"
-                ],
-                borderWidth: 2,
-                borderColor: "#ffffff"
+
+                backgroundColor: tiposOrdenados.map(
+                    item => coresTipos[item[0]] || coresGrafico.azul
+                ),
+
+                borderColor: "#26323A",
+                borderWidth: 4,
+                hoverBorderWidth: 5,
+                hoverOffset: 10,
+                spacing: 2
             }]
         },
+
         options: {
             responsive: true,
             maintainAspectRatio: false,
+
+            cutout: "62%",
+
             plugins: {
                 legend: {
                     display: true,
-                    position: "right"
+                    position: "bottom",
+
+                    labels: {
+                        color: coresGrafico.texto,
+                        font: fonteGraficos,
+                        usePointStyle: true,
+                        pointStyle: "circle",
+                        padding: 14,
+                        boxWidth: 8,
+                        boxHeight: 8
+                    }
                 },
+
                 tooltip: {
+                    ...configuracaoTooltip,
+
                     callbacks: {
                         label: function (context) {
-                            return `${context.label}: ${context.raw} Pokémon`;
+                            const total = context.dataset.data.reduce(
+                                (soma, valor) => soma + valor,
+                                0
+                            );
+
+                            const porcentagem =
+                                (context.raw / total) * 100;
+
+                            return ` ${context.label}: ${context.raw} Pokémon (${porcentagem.toFixed(1)}%)`;
                         }
                     }
                 }
@@ -274,6 +600,10 @@ function criarGraficoTipos() {
         }
     });
 }
+
+// ==========================================
+// GRÁFICO 4 - COMPARAÇÃO DO MEU TIME
+// ==========================================
 
 function criarGraficoComparacao() {
     if (pokemonValidos.length === 0) {
@@ -304,10 +634,20 @@ function criarGraficoComparacao() {
 
     const datasets = [{
         label: "Média geral",
+
         data: mediaGeral,
-        backgroundColor: "rgba(57, 120, 197, 0.2)",
-        borderColor: "#3978C5",
-        borderWidth: 2
+
+        backgroundColor: "rgba(229, 57, 53, 0.25)",
+        borderColor: coresGrafico.azul,
+
+        pointBackgroundColor: coresGrafico.azul,
+        pointBorderColor: "#26323A",
+        pointBorderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 7,
+
+        borderWidth: 3,
+        fill: true
     }];
 
     if (meuTime.length > 0) {
@@ -317,10 +657,20 @@ function criarGraficoComparacao() {
 
         datasets.push({
             label: "Meu time",
+
             data: mediaTime,
-            backgroundColor: "rgba(255, 165, 0, 0.2)",
-            borderColor: "#FFA500",
-            borderWidth: 2
+
+            backgroundColor: "rgba(255, 203, 5, 0.22)",
+            borderColor: coresGrafico.amarelo,
+
+            pointBackgroundColor: coresGrafico.amarelo,
+            pointBorderColor: "#26323A",
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 7,
+
+            borderWidth: 3,
+            fill: true
         });
     }
 
@@ -337,30 +687,75 @@ function criarGraficoComparacao() {
         return;
     }
 
-    const contexto = canvas.getContext("2d");
-
-    graficoComparacao = new Chart(contexto, {
+    graficoComparacao = new Chart(canvas.getContext("2d"), {
         type: "radar",
+
         data: {
             labels: atributos.map(atributo => atributo.nome),
             datasets: datasets
         },
+
         options: {
             responsive: true,
             maintainAspectRatio: false,
+
+            plugins: {
+                legend: {
+                    ...configuracaoLegenda
+                },
+
+                tooltip: {
+                    ...configuracaoTooltip,
+
+                    callbacks: {
+                        label: function (context) {
+                            return ` ${context.dataset.label}: ${context.raw.toFixed(1)}`;
+                        }
+                    }
+                }
+            },
+
             scales: {
                 r: {
                     beginAtZero: true,
                     min: 0,
                     max: 255,
+
+                    angleLines: {
+                        color: coresGrafico.grade
+                    },
+
+                    grid: {
+                        color: coresGrafico.grade
+                    },
+
+                    pointLabels: {
+                        color: coresGrafico.texto,
+                        font: {
+                            ...fonteGraficos,
+                            size: 11,
+                            weight: "600"
+                        }
+                    },
+
                     ticks: {
-                        stepSize: 50
+                        stepSize: 50,
+                        color: coresGrafico.textoSuave,
+                        backdropColor: "transparent",
+                        font: {
+                            ...fonteGraficos,
+                            size: 10
+                        }
                     }
                 }
             }
         }
     });
 }
+
+// ==========================================
+// BUSCAR DETALHES DE UM POKÉMON NA API
+// ==========================================
 
 async function buscarDetalhesPokemon(nome) {
     const nomeAPI = ajustarNome(nome);
@@ -377,9 +772,14 @@ async function buscarDetalhesPokemon(nome) {
 
     return {
         nome: pokemonAPI.name,
-        imagem: pokemonAPI.sprites.other["official-artwork"].front_default
-            || pokemonAPI.sprites.front_default,
+
+        imagem:
+            pokemonAPI.sprites?.other?.home?.front_default ||
+            pokemonAPI.sprites?.other?.["official-artwork"]?.front_default ||
+            pokemonAPI.sprites?.front_default,
+
         tipos: pokemonAPI.types.map(tipo => tipo.type.name),
+
         hp: pokemonAPI.stats[0].base_stat,
         ataque: pokemonAPI.stats[1].base_stat,
         defesa: pokemonAPI.stats[2].base_stat,
@@ -388,6 +788,10 @@ async function buscarDetalhesPokemon(nome) {
         velocidade: pokemonAPI.stats[5].base_stat
     };
 }
+
+// ==========================================
+// BARRAS DE ATRIBUTOS
+// ==========================================
 
 function gerarBarraAtributo(nome, valor) {
     const porcentagem = Math.min((valor / 255) * 100, 100);
@@ -409,6 +813,10 @@ function gerarBarraAtributo(nome, valor) {
     `;
 }
 
+// ==========================================
+// CONSULTAR POKÉMON
+// ==========================================
+
 async function consultarPokemon() {
     const campoBusca = document.getElementById("buscar-analise");
     const nome = campoBusca.value.trim().toLowerCase();
@@ -420,8 +828,10 @@ async function consultarPokemon() {
         return;
     }
 
+    const nomeAPI = ajustarNome(nome);
+
     const pokemonEncontrado = pokedexCompleta.find(
-        pokemon => pokemon.name === nome
+        pokemon => pokemon.name === nomeAPI
     );
 
     if (!pokemonEncontrado) {
@@ -488,6 +898,10 @@ async function consultarPokemon() {
     }
 }
 
+// ==========================================
+// ADICIONAR POKÉMON AO TIME
+// ==========================================
+
 async function adicionarPokemonTime() {
     const selecionarPokemon = document.getElementById("selecionar-pokemon");
     const nomeSelecionado = selecionarPokemon.value.trim().toLowerCase();
@@ -502,8 +916,10 @@ async function adicionarPokemonTime() {
         return;
     }
 
+    const nomeAPI = ajustarNome(nomeSelecionado);
+
     const nomeEncontrado = pokedexCompleta.find(
-        pokemon => pokemon.name === nomeSelecionado
+        pokemon => pokemon.name === nomeAPI
     );
 
     if (!nomeEncontrado) {
@@ -512,7 +928,7 @@ async function adicionarPokemonTime() {
     }
 
     const pokemonExistente = meuTime.find(
-        pokemon => pokemon.nome === nomeSelecionado
+        pokemon => pokemon.nome === nomeAPI
     );
 
     if (pokemonExistente) {
@@ -535,6 +951,10 @@ async function adicionarPokemonTime() {
     }
 }
 
+// ==========================================
+// ATUALIZAR LISTA DO MEU TIME
+// ==========================================
+
 function atualizarListaTime() {
     const lista = document.getElementById("lista-time");
 
@@ -543,17 +963,43 @@ function atualizarListaTime() {
     if (meuTime.length === 0) {
         lista.innerHTML = "<p>Seu time ainda está vazio.</p>";
     } else {
+        const container = document.createElement("div");
+        container.className = "grid-time";
+
         meuTime.forEach(pokemon => {
-            const item = document.createElement("p");
+            const item = document.createElement("article");
+            item.className = "pokemon-time-card";
 
-            item.textContent = formatarNomeExibicao(pokemon.nome);
+            const nomeFormatado = formatarNomeExibicao(pokemon.nome);
 
-            lista.appendChild(item);
+            const imagem = document.createElement("img");
+            imagem.src = pokemon.imagem || "";
+            imagem.alt = nomeFormatado;
+
+            const titulo = document.createElement("h3");
+            titulo.textContent = nomeFormatado;
+
+            const tipos = document.createElement("p");
+            tipos.textContent = pokemon.tipos
+                .map(traduzirTipo)
+                .join(" / ");
+
+            item.appendChild(imagem);
+            item.appendChild(titulo);
+            item.appendChild(tipos);
+
+            container.appendChild(item);
         });
+
+        lista.appendChild(container);
     }
 
     criarGraficoComparacao();
 }
+
+// ==========================================
+// CARREGAR POKÉDEX
+// ==========================================
 
 async function carregarPokedex() {
     try {
@@ -587,6 +1033,10 @@ async function carregarPokedex() {
         console.error("Erro ao carregar a Pokédex:", erro);
     }
 }
+
+// ==========================================
+// CARREGAR DADOS DO DASHBOARD
+// ==========================================
 
 async function carregarDados() {
     try {
@@ -630,15 +1080,17 @@ async function carregarDados() {
 
             return {
                 ...registro,
-                ...detalhe
+                ...(detalhe || {})
             };
         });
 
+        // Criar os gráficos
         criarGraficoMaisUsados(dadosCompletos);
         criarGraficoGeracoes(dadosCompletos);
         criarGraficoTipos();
         criarGraficoComparacao();
 
+        // Atualizar os indicadores
         const totalPokemon = pokemonValidos.length;
 
         const pokemonComMaiorSoma = pokemonValidos.reduce(
@@ -658,10 +1110,12 @@ async function carregarDados() {
             { nome: "", soma: 0 }
         );
 
-        const mediaHP = pokemonValidos.reduce(
-            (total, pokemon) => total + pokemon.hp,
-            0
-        ) / totalPokemon;
+        const mediaHP = totalPokemon > 0
+            ? pokemonValidos.reduce(
+                (total, pokemon) => total + pokemon.hp,
+                0
+            ) / totalPokemon
+            : 0;
 
         const contagemTipos = {};
 
@@ -679,10 +1133,14 @@ async function carregarDados() {
         document.getElementById("kpi-total").textContent = totalPokemon;
 
         document.getElementById("kpi-maior-soma").textContent =
-            `${formatarNomeExibicao(pokemonComMaiorSoma.nome)} (${pokemonComMaiorSoma.soma})`;
+            pokemonComMaiorSoma.nome
+                ? `${formatarNomeExibicao(pokemonComMaiorSoma.nome)} (${pokemonComMaiorSoma.soma})`
+                : "—";
 
         document.getElementById("kpi-tipo").textContent =
-            traduzirTipo(tipoMaisComum[0]);
+            tipoMaisComum[0]
+                ? traduzirTipo(tipoMaisComum[0])
+                : "—";
 
         document.getElementById("kpi-hp").textContent =
             mediaHP.toFixed(1);
@@ -696,6 +1154,10 @@ async function carregarDados() {
     }
 }
 
+// ==========================================
+// EVENTOS
+// ==========================================
+
 document.getElementById("adicionar-pokemon").addEventListener(
     "click",
     adicionarPokemonTime
@@ -705,6 +1167,10 @@ document.getElementById("consultar-pokemon").addEventListener(
     "click",
     consultarPokemon
 );
+
+// ==========================================
+// INICIALIZAÇÃO
+// ==========================================
 
 carregarDados();
 carregarPokedex();
