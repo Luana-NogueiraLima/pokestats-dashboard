@@ -310,11 +310,75 @@
     </main>
 
     <footer class="rodape">
+
         <p>
-            <strong>PokéStats</strong> | Explore, descubra e compare o universo Pokémon.
+            <strong>PokéStats</strong> |
+            Explore, descubra e compare o universo Pokémon.
         </p>
+
     </footer>
 
+    <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+
+    <script src="js/back4app.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script src="js/script.js"></script>
+
+    <script>
+    (function () {
+        const abas = document.querySelectorAll(".aba");
+        const links = document.querySelectorAll(".menu a");
+        const menu = document.getElementById("menu");
+        const botao = document.getElementById("menu-toggle");
+
+        function abrirAba(id, atualizarHash = true) {
+            const alvo = document.getElementById(id);
+            if (!alvo || !alvo.classList.contains("aba")) return false;
+
+            abas.forEach(aba => aba.classList.toggle("ativa", aba === alvo));
+            links.forEach(link =>
+                link.classList.toggle("ativa", link.getAttribute("href") === "#" + id)
+            );
+
+            if (atualizarHash) history.replaceState(null, "", "#" + id);
+
+            window.scrollTo({ top: 0, behavior: "smooth" });
+
+            window.dispatchEvent(new Event("resize"));
+            return true;
+        }
+
+        function fecharMenu() {
+            menu.classList.remove("aberto");
+            botao.setAttribute("aria-expanded", "false");
+            botao.setAttribute("aria-label", "Abrir menu");
+        }
+
+        botao.addEventListener("click", () => {
+            const aberto = menu.classList.toggle("aberto");
+            botao.setAttribute("aria-expanded", String(aberto));
+            botao.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
+        });
+
+        document.addEventListener("click", (e) => {
+            const link = e.target.closest('a[href^="#"]');
+            if (!link) return;
+
+            const id = link.getAttribute("href").slice(1);
+            if (abrirAba(id)) {
+                e.preventDefault();
+                fecharMenu();
+            }
+        });
+
+        if (!abrirAba(location.hash.slice(1), false)) {
+            abrirAba("visao-geral", false);
+        }
+    })();
+    </script>
+
 </body>
+
 </html>
