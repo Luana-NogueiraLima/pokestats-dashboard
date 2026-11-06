@@ -128,7 +128,7 @@ Projeto desenvolvido em equipe como atividade acadêmica.
 
 ## 📌 Status do projeto
 
-Projeto acadêmico em fase de finalização.
+Projeto acadêmico finalizado
 
 ---
 
