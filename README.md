@@ -110,6 +110,12 @@ Os critérios de seleção, tratamento e organização dos dados estão descrito
 
 4. Acesse o endereço disponibilizado pelo servidor no navegador.
 
+## 🌐 Acesso ao projeto
+
+O site está publicado na plataforma Vercel e pode ser acessado pelo link:
+
+https://pokestats-dashboard-psi.vercel.app/
+
 ### Integração com o Back4App
 
 Para utilizar a área de análises, é necessário configurar a integração com o Back4App.
