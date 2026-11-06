@@ -1,12 +1,8 @@
-/* =========================================
-   POKÉSTATS | IDENTIDADE VISUAL
-========================================= */
-
 @import url("https://fonts.googleapis.com/css2?family=Titan+One&display=swap");
 
 :root {
     --azul-escuro: #161b20;
-    --azul-principal: #e53935;      /* vermelho principal */
+    --azul-principal: #e53935;
     --azul-claro: #26323a;
     --vermelho: #e53935;
     --amarelo: #ffcb05;
@@ -16,7 +12,7 @@
     --laranja: #ff9f1a;
 
     --fundo: #161b20;
-    --branco: #26323a;  /* superfície dos cards */
+    --branco: #26323a;
     --texto: #f1f3f4;
     --texto-suave: #9aa7b0;
     --borda: rgba(255, 255, 255, 0.10);
@@ -27,10 +23,6 @@
     --raio: 18px;
     --fonte: Arial, Helvetica, sans-serif;
 }
-
-/* =========================================
-   RESET E CONFIGURAÇÕES GERAIS
-========================================= */
 
 * {
     margin: 0;
@@ -65,10 +57,6 @@ a {
     text-decoration: none;
 }
 
-/* =========================================
-   CABEÇALHO
-========================================= */
-
 .topo {
     min-height: 82px;
     padding: 0 6%;
@@ -96,14 +84,11 @@ a {
     line-height: 1;
     transform: rotate(-2deg);
 
-    /* preenchimento amarelo Pokémon */
     color: #ffcb05;
 
-    /* contorno azul grosso por fora das letras */
     -webkit-text-stroke: 7px #2a5cc7;
     paint-order: stroke fill;
 
-    /* sombra 3D azul-escura + brilho neon */
     text-shadow:
         0 4px 0 #1a3a8f,
         0 6px 0 #14297a,
@@ -150,10 +135,6 @@ a {
     width: 100%;
 }
 
-/* =========================================
-   CONTEÚDO PRINCIPAL
-========================================= */
-
 main {
     width: min(1380px, 92%);
     margin: 0 auto;
@@ -164,10 +145,6 @@ main > section {
     margin-bottom: 35px;
     scroll-margin-top: 110px;
 }
-
-/* =========================================
-   BANNER PRINCIPAL
-========================================= */
 
 .banner {
     min-height: 310px;
@@ -222,7 +199,7 @@ main > section {
     padding: 7px 14px;
     margin-bottom: 16px;
 
-    background: rgba(229, 57, 53, 0.14);
+    background: rgba(253, 252, 252, 0.979);
     color: var(--azul-principal);
 
     border: 1px solid rgba(229, 57, 53, 0.5);
@@ -279,10 +256,6 @@ main > section {
         transform: translateY(-10px);
     }
 }
-
-/* =========================================
-   BOTÕES
-========================================= */
 
 .botao {
     display: inline-flex;
@@ -343,10 +316,6 @@ button:active {
     transform: translateY(0);
 }
 
-/* =========================================
-   TÍTULOS DAS SEÇÕES
-========================================= */
-
 .titulo-secao {
     margin-bottom: 22px;
 }
@@ -374,10 +343,6 @@ button:active {
     font-size: 0.95rem;
 }
 
-/* =========================================
-   CARDS GERAIS
-========================================= */
-
 .card {
     background: var(--branco);
     border: 1px solid var(--borda);
@@ -403,10 +368,6 @@ button:active {
     font-size: 1.05rem;
     margin-bottom: 8px;
 }
-
-/* =========================================
-   INDICADORES - KPIs
-========================================= */
 
 #kpis {
     display: grid;
@@ -471,10 +432,6 @@ button:active {
     overflow-wrap: anywhere;
 }
 
-/* =========================================
-   DASHBOARD E GRÁFICOS
-========================================= */
-
 #dashboard {
     padding-top: 10px;
 }
@@ -518,10 +475,6 @@ button:active {
     max-height: 400px;
 }
 
-/* =========================================
-   CONSULTA DE POKÉMON
-========================================= */
-
 #analises,
 #meu-time,
 #minhas-analises {
@@ -542,10 +495,6 @@ button:active {
     margin-right: 10px;
     margin-bottom: 10px;
 }
-
-/* =========================================
-   CAMPOS DE ENTRADA
-========================================= */
 
 input,
 textarea {
@@ -576,9 +525,19 @@ textarea::placeholder {
     color: #78909c;
 }
 
-/* =========================================
-   DETALHES DO POKÉMON
-========================================= */
+input[list]::-webkit-calendar-picker-indicator,
+input::-webkit-calendar-picker-indicator {
+    display: none !important;
+    opacity: 0 !important;
+    -webkit-appearance: none;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+}
 
 #detalhes-pokemon {
     min-height: 120px;
@@ -668,10 +627,6 @@ textarea::placeholder {
     transition: width 0.5s ease;
 }
 
-/* =========================================
-   MEU TIME
-========================================= */
-
 #lista-time {
     margin-top: 25px;
 }
@@ -737,10 +692,6 @@ textarea::placeholder {
     margin: 20px auto;
 }
 
-/* =========================================
-   MINHAS ANÁLISES
-========================================= */
-
 #form-analise {
     display: flex;
     flex-direction: column;
@@ -784,10 +735,6 @@ textarea::placeholder {
     border-top: 1px solid var(--borda);
 }
 
-/* =========================================
-   RODAPÉ
-========================================= */
-
 .rodape {
     padding: 30px 20px;
 
@@ -806,10 +753,6 @@ textarea::placeholder {
 .rodape strong {
     color: var(--amarelo);
 }
-
-/* =========================================
-   TABLETS
-========================================= */
 
 @media (max-width: 1000px) {
     .topo {
@@ -832,10 +775,6 @@ textarea::placeholder {
         padding: 35px;
     }
 }
-
-/* =========================================
-   CELULARES
-========================================= */
 
 @media (max-width: 650px) {
     html {
@@ -987,10 +926,6 @@ textarea::placeholder {
     }
 }
 
-/* =========================================
-   TELAS MUITO PEQUENAS
-========================================= */
-
 @media (max-width: 380px) {
     #kpis {
         grid-template-columns: 1fr;
@@ -1008,9 +943,6 @@ textarea::placeholder {
         gap: 10px;
     }
 }
-/* =========================================
-   ABAS
-========================================= */
 
 .aba {
     display: none;
@@ -1037,10 +969,6 @@ textarea::placeholder {
 .menu a.ativa::after {
     width: 100%;
 }
-
-/* =========================================
-   MENU SANDUÍCHE
-========================================= */
 
 .menu-toggle {
     display: none;
